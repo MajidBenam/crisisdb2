@@ -1,0 +1,17 @@
+{% extends "detail_base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block addmore %}
+<a href="{% url 'Agr_Prod_Pop-create' %}" class="btn btn-outline-success mx-3 my-4 float-end"> &nbsp; Add another fact &nbsp; <i class="fa fa-plus"></i></a>
+{% endblock addmore %}
+
+{% block myheadings %}
+<th scope="col">Total Population</th>
+<th scope="col">Arable Land</th>
+{% endblock myheadings %}
+
+{% block myrow %}
+    <td>{{ object.total_population|intcomma }}</td>
+    <td>{{ object.arable_land_per_capita }}</td>
+{% endblock myrow %}

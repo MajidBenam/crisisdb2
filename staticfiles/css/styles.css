@@ -1,0 +1,134 @@
+.sidebar-nav {
+  margin-top: 20px;
+  padding: 0;
+  list-style: none;
+}
+
+.col-sm-2 {
+  background-color: #fefae6;
+  border-radius: 15px;
+  margin-bottom: 100px;
+}
+
+.col-sm-6 {
+  background-color: #fefae6;
+  border-radius: 15px;
+  margin-bottom: 100px;
+}
+
+.col-sm-3 {
+  padding: 15px;
+  padding-top: 85px;
+  background-color: #fefae6;
+  border-radius: 15px;
+  color: #356859;
+  margin-bottom: 100px;
+}
+.main-view {
+  padding: 20px;
+}
+
+.container-fluid {
+  margin-top: 0px;
+}
+
+.center-block {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.majidborder {
+  padding: 5px;
+  background-color: #eff3de;
+  border-radius: 5px;
+}
+
+.majidtransborder {
+  padding: 5px;
+  border: 1px solid #356859;
+  border-radius: 50%;
+}
+
+h1,
+h2,
+p,
+ul,
+.majidgoodgreen {
+  color: #356859;
+}
+
+.back-in {
+  background-color: #fefae6;
+  /* font-family: "Be Vietnam Pro", sans-serif; */
+}
+
+.backhoob {
+  background-image: url("https://image.shutterstock.com/image-photo/panorama-blurred-bookshelf-many-old-260nw-1510777091.jpg");
+  background-repeat: repeat;
+}
+
+a {
+  color: #fd5624;
+  text-decoration: none !important;
+}
+
+.majidgreen {
+  color: #eef1dc;
+}
+
+ul {
+  margin-left: 10px;
+}
+
+ul ul {
+  margin-left: 20px;
+}
+
+#showcase-inner {
+  background-image: url("https://image.shutterstock.com/image-photo/panorama-blurred-bookshelf-many-old-260nw-1510777091.jpg");
+}
+.majidcenter {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.panel-transparent {
+  background: none;
+  border: none;
+}
+
+.card {
+  display: inline-block;
+}
+
+.random_quote {
+  border-left: 10px solid #235347;
+  padding-left: 10px;
+}
+
+a:link {
+  text-decoration: none !important;
+}
+
+.mmajid {
+  background-color: rgba(142, 184, 155, 1);
+  width: 100%;
+}
+
+.dijamm {
+  background-image: linear-gradient(to top, #8eb89b, #fefae6);
+  width: 100%;
+}
+
+.mmmajid {
+  color: black;
+}
+
+.errorlist {
+  color: #fd5624;
+}
+
+.transparent {
+  background-color: rgba(255, 255, 255, 0.5);
+}

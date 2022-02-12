@@ -1,0 +1,85 @@
+{% extends "crisisdb-base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+<div class="container">
+    {% if agr_prod_pop_list %}
+    <div class="row">
+            <div class="col-md-8 mt-4">
+                <h5 class="lead-2">List of all the data for:</h5>
+                <h6><span class="display-6">Agricultural Production and Population </span></h6>
+            </div>
+        <div class="col-md-4">      
+          <a href="{% url 'Agr_Prod_Pop-create' %}" class="btn btn-outline-success mx-3 my-4 float-end"> Add another fact</a>
+          <a href="{% url 'crisisdb-index' %}" class="btn btn-outline-primary ms-auto my-4 float-end"> Go back to home page</a>
+        </div>
+      </div>
+      <hr>
+    <div class="table-responsive">
+        <table class="table align-middle table-striped">
+            <thead>
+                
+              <tr>
+                <th scope="col">#Row</th>
+                <th scope="col">Polity</th>
+                <th scope="col">Section</th>
+                <th scope="col">Year</th>
+                <th scope="col">Total Population</th>
+                <th scope="col">Arable Land</th>
+                <th scope="col" style="text-align: center">References</th>
+                <th scope="col" style="text-align: center">Verified</th>
+                <th scope="col" style="text-align: center">Update?</th>
+
+
+              </tr>
+            </thead>
+            <tbody>
+                {% for rt in rulertransitions %}
+                    <tr>
+                    <div>
+                    <th scope="row">{{ forloop.counter0|add:page_obj.start_index }}</th>
+                    <td>{{ rt.polity.name }}</td>
+                    <td>{{ rt.section }}</td>
+                    <td>{{ rt.year }}</td>
+                    <td>{{ rt.total_population|intcomma }}</td>
+                    <td>{{ rt.arable_land_per_capita }}</td>
+                    <td> {% autoescape off %}{{ rt.display_citations }}{% endautoescape %}</td>
+                    
+                    {% if rt.finalized %}
+                        <td style="text-align: center; color:green;"><i class="fas fa-check"></i></td>
+                    {% else %}
+                        <td style="text-align: center; color:red;"><i class="fas fa-times-circle"></i></td>
+                    {% endif %}
+                    <td style="text-align: center;"><a href="{% url 'rulertransition-update' rt.id %}"><button class="btn btn-warning btn-sm"> suggest an Update </button></a></td>
+
+                </div>
+                </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+          {% if is_paginated %}
+          <div class="pagination my-4 pe-4 float-end">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}"><button class="btn btn-primary btn-md"> <i class="fas fa-step-backward"></i> Prev </button></a>
+                {% else %}
+                <button class="btn btn-outline-primary btn-md" disabled> <i class="fas fa-step-backward"></i>  Prev</button>
+                {% endif %}
+                <span class="page-current">
+                    &nbsp; Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}. &nbsp; 
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}"><button class="btn btn-primary btn-md"> Next <i class="fas fa-step-forward"></i></button></a>
+                    {% else %}
+                    <button class="btn btn-outline-primary btn-md" disabled> Next <i class="fas fa-step-forward"></i></button>
+                {% endif %}
+            </span>
+            </div>
+            
+          {% endif %}
+    {% else %}
+        <p>There are no Facts in the Database.</p>
+    {% endif %}
+    </div>
+  {% endblock %}

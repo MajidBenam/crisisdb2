@@ -1,0 +1,92 @@
+{% extends "crisisdb-base.html" %}
+{% load crispy_forms_tags %}
+{% load crisisdb_tags %}
+
+{% block content %}
+<!-- form-row and form-group etc are removed in Bootstrap 5 -->
+<div class="container mt-5">
+    <form action="" method="post">
+        {% csrf_token %}
+        <legend>
+            <div class="row">
+                <div class="col-md-9">
+                    <h5 class="lead-2">You can enter a new data point for:</h5>
+                    <!-- that's how we show the content of a form field and not the widget -->
+                    <!-- OPTION1: <h6><span class="display-6">{{form.name.value}}</span></h6> -->
+                    <h6><span class="display-6">{%titleize form.full_name%}</span></h6>
+                </div>
+                <div class="col-md-3 pe-3">
+                    {{ icon1 }} {{ icon1 }}
+                </div>
+                <div class="col-md-3">
+                </div>
+            </div>       
+            <hr>
+    </legend>
+        <div class="row">
+          <div class="col-md-2 mb-2 disabled">
+            {{ form.polity|as_crispy_field }}
+          </div>
+          <div class="col-md-3 mb-2">
+            {{ form.section|as_crispy_field }}
+          </div>
+          <div class="col-md-3 mb-2">
+            {{ form.subsection|as_crispy_field }}
+          </div>
+          <div class="col-md-2 mb-2">
+            {{ form.year_from|as_crispy_field }}
+          </div>
+          <div class="col-md-2 mb-2">
+            {{ form.year_to|as_crispy_field }}
+          </div>
+        </div>
+        <!-- Here come the extra vars -->
+        {% block extra_vars %}
+        {% endblock extra_vars %}
+        <div class="row">
+            <div class="col-md-6 mb-2">
+              {{ form.citations|as_crispy_field }}
+            </div>
+            <div class="col-md-6 mb-2">
+                {{ form.description|as_crispy_field }}
+              </div>
+        </div>
+        <div class="row">
+            {% if request.user.is_staff %}
+            <div class="col-md-4 py-3 ps-4">
+                <div class="mb-2">
+                    <i class="fas fa-user-check"></i> You are a Seshat Expert; you can finalize a fact.
+                </div> 
+                <div  class="mb-2">
+                    {{ form.finalized|as_crispy_field }}
+                </div>               
+            </div>
+            {% else %}
+            <div class="col-md-4 py-3 ps-4">
+                <input type="checkbox" id="seshatexpert" name="vehicle2" value="Car" onclick="return false">
+                <label for="seshatexpert"> You are not a Seshat Expert.</label>
+            </div>
+            {% endif %}
+            <div class="col-md-4 mb-2 py-2 d-grid mx-auto">
+                <button href="#" type="cancel" class="btn btn-outline-danger my-auto btn-block btn-lg">Cancel </button>
+            </div>
+            <div class="col-md-4 mb-2 py-2 d-grid mx-auto">
+                <button type="submit" class="btn btn-outline-success my-auto btn-block btn-lg">Submit for Review*</button>
+            </div>
+
+        </div>
+
+        <!-- {% if form.errors %}
+        {% for field in form %}
+            {% for error in field.errors %}
+                <div class="text-danger"><h3> {{ error }} </h3></div>
+            {% endfor %}
+        {% endfor %}
+        {% endif %} -->
+          </form>
+        <div class="col-md-12">
+            <hr>
+            <h6>* Your entered data will soon be checked by a Seshat Expert.</h6>
+        </div>
+</div>
+{% endblock %}

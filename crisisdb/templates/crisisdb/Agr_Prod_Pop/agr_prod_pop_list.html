@@ -1,0 +1,13 @@
+{% extends "list_base.html" %}
+{% load crispy_forms_tags %}{% load static %}
+{% load humanize %}
+
+{% block myheadings_list %}
+<th scope="col">Total Population</th>
+<th scope="col">Arable Land</th>
+{% endblock myheadings_list %}
+
+{% block extra_vars_list %}
+<td style="text-align: center;">{{ agr.total_population|intcomma }}</td>
+<td style="text-align: center;">{{ agr.arable_land_per_capita }}</td>
+{% endblock extra_vars_list %}

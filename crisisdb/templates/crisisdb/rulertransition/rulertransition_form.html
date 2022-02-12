@@ -1,0 +1,124 @@
+{% extends "crisisdb-base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<!-- form-row and form-group etc are removed in Bootstrap 5 -->
+<div class="container mt-5">
+    <form action="" method="post">
+        {% csrf_token %}
+        <legend>
+            <div class="row">
+                <div class="col-md-9">
+                    <h5 class="lead-2">You can enter a new data point for:</h5>
+                    <!-- that's how we show the content of a form field and not the widget -->
+                    <!-- OPTION1: <h6><span class="display-6">{{form.name.value}}</span></h6> -->
+                    <h6><span class="display-6">{{form.full_name}}</span></h6>
+                  </div>
+                <div class="col-md-3 pe-3">
+                </div>
+                <div class="col-md-3">
+                </div>
+            </div>       
+            <hr>
+    </legend>
+        <div class="row g-2">
+          <div class="col-md-4 mb-2 disabled">
+            {{ form.polity|as_crispy_field }}
+          </div>
+          <div class="col-md-4 mb-2">
+            {{ form.conflict_name|as_crispy_field }}
+          </div>
+          <div class="col-md-4 mb-2">
+            {{ form.transition_label|as_crispy_field }}
+        </div>
+        <div class="row g-2">
+            <div class="col-md-4 mb-2 disabled">
+              {{ form.start_reign_predecessor|as_crispy_field }}
+            </div>
+            <div class="col-md-4 mb-2">
+              {{ form.end_reign_transition|as_crispy_field }}
+            </div>
+            <div class="col-md-4 mb-2">
+              {{ form.reign_number_predecessor|as_crispy_field }}
+        </div>
+          <div class="row g-1">
+            <div class="col-md-2 mb-2 disabled">
+              {{ form.contested|as_crispy_field }}
+            </div>
+            <div class="col-md-2 mb-2">
+              {{ form.overturn|as_crispy_field }}
+            </div>
+            <div class="col-md-3 mb-2">
+              {{ form.assassination_predecessor|as_crispy_field }}
+            </div>
+            <div class="col-md-2 mb-2 disabled">
+                {{ form.intra_elite|as_crispy_field }}
+            </div>
+            <div class="col-md-3 mb-2">
+                {{ form.military_revolt|as_crispy_field }}
+            </div>
+        </div>
+        <div class="row g-2">
+            <div class="col-md-3 mb-2">
+                {{ form.popular_uprising|as_crispy_field }}
+            </div>
+            <div class="col-md-3 mb-2">
+              {{ form.separatist_rebellion|as_crispy_field }}
+            </div>
+            <div class="col-md-3 mb-2">
+              {{ form.external_invasion|as_crispy_field }}
+            </div>
+            <div class="col-md-3 mb-2">
+                {{ form.external_interference|as_crispy_field }}
+            </div>
+        </div>
+        <div class="row g-2">
+            <div class="col-md-6 mb-2">
+              {{ form.citations|as_crispy_field }}
+            </div>
+            <div class="col-md-6 mb-2">
+                {{ form.description|as_crispy_field }}
+              </div>
+        </div>
+        <div class="row">
+            {% if request.user.is_staff %}
+            <div class="col-md-4 py-3 ps-4">
+                <div class="mb-2">
+                    <i class="fas fa-user-check"></i> You are a Seshat Expert
+                </div> 
+                <div  class="mb-2">
+                    {{ form.finalized|as_crispy_field }}
+                </div>               
+            </div>
+            {% if not form.finalized %}
+            <h5>Hi there</h5>
+            {% endif %}
+            {% else %}
+            <div class="col-md-4 py-3 ps-4">
+                <input type="checkbox" id="seshatexpert" name="vehicle2" value="Car" onclick="return false">
+                <label for="seshatexpert"> You are not a Seshat Expert</label>
+            </div>
+            {% endif %}
+            <div class="col-md-4 mb-2 py-2 d-grid mx-auto">
+                <button href="#" type="cancel" class="btn btn-outline-danger my-auto btn-block btn-lg">Cancel </button>
+            </div>
+            <div class="col-md-4 mb-2 py-2 d-grid mx-auto">
+                <button type="submit" class="btn btn-outline-success my-auto btn-block btn-lg">Submit for Review*</button>
+            </div>
+
+        </div>
+
+        <!-- {% if form.errors %}
+        {% for field in form %}
+            {% for error in field.errors %}
+                <div class="text-danger"><h3> {{ error }} </h3></div>
+            {% endfor %}
+        {% endfor %}
+        {% endif %} -->
+          </form>
+        <div class="col-md-12">
+            <hr>
+            <h6>* Your entered data will soon be checked by a Seshat Expert.</h6>
+        </div>
+</div>
+{% endblock %}

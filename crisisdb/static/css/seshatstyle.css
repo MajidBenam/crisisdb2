@@ -1,0 +1,63 @@
+#showcase-seshat {
+  background-image: url("http://seshatdatabank.info/wp-content/uploads/2019/03/newmap.png") !important;
+  background-position: center top;
+  background-size: 100% auto;
+  opacity: 0.9;
+  min-height: 575px;
+  /* background-color: darkorange; */
+}
+
+body {
+  background-color: #fefae6;
+}
+
+.transparent-span {
+  background-color: rgba(254, 250, 230, 0.9);
+
+  border-radius: 10px;
+}
+
+.transparent-span-head {
+  background-color: rgba(222, 243, 229, 0.95);
+  border-radius: 10px;
+}
+
+a.btn {
+  transition-property: padding, border, border-radius, background;
+  transition-duration: 0.5s;
+}
+
+a.btn:hover {
+  padding-left: 30px;
+  padding-right: 30px;
+  border: 1px rgba(222, 243, 229, 0.95) solid;
+  border-radius: 10px;
+  background: #112e25;
+}
+
+.seshat-accordion {
+  background: rgba(222, 243, 229, 0.95);
+}
+
+.accordion-body {
+  line-height: 1.75;
+  background: #fefae6;
+}
+/* .accordion-button.collapsed {
+  background: blue;
+} */
+
+.accordion-button {
+  color: #356859;
+}
+
+.accordion-button:not(.collapsed) {
+  background: rgba(222, 243, 229, 0.95);
+  color: #356859;
+}
+
+.accordion-button:focus {
+  color: #356859;
+  box-shadow: 0 0 0 0.25rem rgb(13 110 53 / 25%);
+  text-shadow: 1px 1px #f0e19a;
+}

@@ -1,0 +1,25 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Book List <span class="float-end"><a href="{% url 'book-create' %}" class="btn btn-md btn-success" role="button">Create a New Book</a></span></h1>
+    <hr>
+    <p><a href="{% url 'book-download' %}" class="form-control btn btn-success my-3 px-5" role="button">downlaod all the books in a CSV</a></p>
+    <hr>
+    {% if book_list %}
+    <ul>
+        {% for book in book_list %}
+            <li><a href="{{ book.get_absolute_url }}">{{ book.title }}</a> ({{ book.author }})</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p>There are no books in the lib.</p>
+    {% endif %}
+{% endblock %}
+
+{% block quote %}
+<div class="random_quote">
+
+    <p class="q_cont"><h5>{{ rand_q.description }} </h5></p>
+    <p class="q_cont"><em> &#8212; {{ rand_q.owner }}</em></p>
+</div>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends "crisisdb-base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <h1 class="my-4">Well done. </h1>
+    </div>
+    <div class="col-md-6"> 
+        {% block addmore %}
+        {% endblock addmore %}
+      <a href="{% url 'crisisdb-index' %}" class="btn btn-outline-primary ms-auto my-4 float-end"> Go back to home page</a>
+    </div>
+  </div>
+  <div class="alert alert-success" role="alert">
+    <i class="fas fa-check"></i> You successfully suggested to add the following information to Seshat Database:
+  </div>
+  <table class="table align-middle table-striped">
+    <thead>        
+      <tr>
+        <!-- headings for the newly added row come here -->
+        <th scope="col">#</th>
+        <th scope="col">Polity</th>
+        <th scope="col">Section</th>
+        <th scope="col">Year (From)</th>
+        <th scope="col">Year (To)</th>        {% block myheadings %}
+        {% endblock myheadings %}
+        <th scope="col" style="text-align: center">References</th>
+        <th scope="col" style="text-align: center">Verified</th>
+
+      </tr>
+    </thead>
+    <tbody>
+          <tr>
+            <div>
+              <th scope="row">1</th>
+              <td>{{ object.polity.name }}</td>
+              <td>{{ object.section }}</td>
+              <td>{{ object.year_from }}</td>
+              <td>{{ object.year_to }}</td>
+              <!-- columns for a new row come here -->
+              {% block myrow %}
+              {% endblock myrow %}
+
+              <td> {% autoescape off %}{{ object.display_citations }}{% endautoescape %}</td>
+              
+              {% if object.finalized %}
+                  <td style="text-align: center; color:green;"><i class="fas fa-check"></i></td>
+              {% else %}
+                  <td style="text-align: center; color:red;"><i class="fas fa-times-circle"></i></td>
+              {% endif %}
+
+        </div>
+        </tr>
+    </tbody>
+  </table>
+
+  <h1 class="display-6 mt-5 mb-3">Fact Under Review:</h1>
+
+  <div class="alert alert-warning" role="alert">
+    <i class="fas fa-user-check"></i> A Seshat Expert will confirm it soon. Please wait.
+  </div>
+
+</div>
+  {% endblock %}

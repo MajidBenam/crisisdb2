@@ -23,6 +23,17 @@ body {
 }
 
 a.btn {
+  transition-property: border, border-radius, background;
+  transition-duration: 0.5s;
+}
+
+a.btn:hover {
+  border: 1px rgba(222, 243, 229, 0.95) solid;
+  border-radius: 10px;
+  background: #112e25;
+}
+
+/* a.btn {
   transition-property: padding, border, border-radius, background;
   transition-duration: 0.5s;
 }
@@ -33,7 +44,7 @@ a.btn:hover {
   border: 1px rgba(222, 243, 229, 0.95) solid;
   border-radius: 10px;
   background: #112e25;
-}
+} */
 
 .seshat-accordion {
   background: rgba(222, 243, 229, 0.95);

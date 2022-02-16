@@ -5,26 +5,29 @@
 <div class="container mt-4">
     <div class="row">
         <h1 class="display-6">Here is the list of all variables in CrisisDB so far:</h1>
-<hr>
-        {{Agr_Prod_Pod}}
     </div>
-    <div class="row">
-        {% for k, v in list_of_vars.items %}
-        <div class="col-md-2 no border-bottom border-success  text-center">
+    <div class="row align-items-end">
+        {% for v in mylist %}
+        <div class="col-md-2 text-center rounded" >
             <div class="card panel-transparent mt-4">
-                <a href="{% url 'books' %}">
-                    <center style="color: #356859"><i class="fa fa-{{v.1}} fa-3x"></i></center>
-                </a>
-                <div class="card-body">
-                  <h6 class="card-title text-center"> <strong>{{k}}</strong> <br><span class="text-secondary">{{v.0}}</span></h6>
-                  <button class="btn btn-sm btn-outline-success"><a href="#" class="card-link"> &nbsp; View &nbsp; </a></button>
-                  <button class="btn btn-sm btn-success"><a href="#" class="card-link" style="color: white"> &nbsp; &nbsp;Add &nbsp; &nbsp;</a></button>
-                </div>
+                    <div>
+                        <a href="{% url 'crisisdb-index' %}">
+                            <center style="color: #356859"><i class="fa fa-tractor fa-3x"></i></center>
+                        </a>
+                    </div>
+                    <div class="card-body mt-auto" >
+                        <div>
+                            <h6 class="card-title text-center lead"> <strong>{{v.3}}</strong></h6>
+                            <h2 class="card-title text-center display"><span class="text-success"><strong>{{v.0}}</strong></span> </h2>              
+                        </div>
+                        <div>
+                            <a class="btn btn-sm btn-outline-primary" href="{{v.1}}" class="card-link"> <i class="fa fa-eye"></i> &nbsp; View</a>
+                            <a class="btn btn-sm btn-outline-success" href="{{v.2}}" class="card-link"> &nbsp; Add &nbsp; <i class="fa fa-plus"></i></a>
+                        </div>
+                    </div>
             </div>
-        </div>     
+        </div>
         {% endfor %}
     </div>
 </div>
-
-
 {% endblock %}

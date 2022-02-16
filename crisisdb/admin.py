@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Polity, Agr_Prod_Pop, Country, Rulertransition, Section, Subsection, Agr_Productivity, Agr_Prod_Per_Pop, Citation, Reference
+from .models import Polity, Agr_Prod_Pop, Country, Rulertransition, Section, Subsection, Agr_Productivity, Agr_Prod_Per_Pop, Citation, Reference, Majid
 
 """Minimal registration of Models.
 admin.site.register(Book)
@@ -20,3 +20,4 @@ admin.site.register(Agr_Prod_Per_Pop)
 admin.site.register(Citation)
 admin.site.register(Reference)
 admin.site.register(Rulertransition)
+admin.site.register(Majid)

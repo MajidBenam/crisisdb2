@@ -118,17 +118,22 @@ class Agr_Prod_PopForm(forms.ModelForm):
         # make sure the id that is selected here for subsection and section matches reality ALL the TIME
         widgets = {
             'polity': forms.Select(attrs={'class': 'form-control  mb-3', }),
-            'section': forms.Select(attrs={'class': 'form-control  mb-3', 'readonly': True, 'selected': True, 'initial': 1}),
-            'subsection': forms.Select(attrs={'class': 'form-control  mb-3', 'readonly': True, 'selected': True, 'initial': 1}),
+            'section': forms.Select(attrs={'class': 'form-control  mb-3', 'readonly': True, 'selected': True, }),
+            'subsection': forms.Select(attrs={'class': 'form-control  mb-3', 'readonly': True, 'selected': True, }),
             'year_from': forms.NumberInput(attrs={'class': 'form-control  mb-3', }),
             'year_to': forms.NumberInput(attrs={'class': 'form-control  mb-3', }),
             'total_population': forms.NumberInput(attrs={'class': 'form-control  mb-3', }),
             'arable_land_per_capita': forms.NumberInput(attrs={'step': 0.01}),
             'description': Textarea(attrs={'class': 'form-control  mb-3', 'style': 'height: 140px'}),
             'citations': forms.SelectMultiple(attrs={'class': 'form-control  mb-3',  'style': 'height: 140px'}),
-            'tag': forms.Select(attrs={'class': 'form-control  mb-3', }),
+            'tag': forms.RadioSelect(attrs={'class': 'form-control  mb-3', }),
             'finalized': forms.CheckboxInput(attrs={'class': ' mb-3', 'checked': True, }),
             # 'citation_2': forms.Select(attrs={'class': 'form-control  mb-3', }),
+        }
+
+        initial = {
+            'section': 1,
+            'subsection': 1,
         }
         # helper = FormHelper()
         # helper.form_method = 'POST'

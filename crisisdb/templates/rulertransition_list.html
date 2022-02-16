@@ -4,14 +4,14 @@
 
 {% block content %}
 <div class="container">
-    {% if object_list %}
+    {% if agr_prod_pop_list %}
     <div class="row">
             <div class="col-md-8 mt-4">
                 <h5 class="lead-2">List of all the data for:</h5>
-                <h6><span class="display-6">ruler transitions </span></h6>
+                <h6><span class="display-6">Agricultural Production and Population </span></h6>
             </div>
         <div class="col-md-4">      
-          <a href="{% url 'rulertransition-create' %}" class="btn btn-outline-success mx-3 my-4 float-end"> Add another fact</a>
+          <a href="{% url 'Agr_Prod_Pop-create' %}" class="btn btn-outline-success mx-3 my-4 float-end"> Add another fact</a>
           <a href="{% url 'crisisdb-index' %}" class="btn btn-outline-primary ms-auto my-4 float-end"> Go back to home page</a>
         </div>
       </div>
@@ -35,7 +35,7 @@
               </tr>
             </thead>
             <tbody>
-                {% for rt in object_list %}
+                {% for rt in rulertransitions %}
                     <tr>
                     <div>
                     <th scope="row">{{ forloop.counter0|add:page_obj.start_index }}</th>

@@ -1,0 +1,35 @@
+{% extends "crisisdb-base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <div class="row">
+        <h1 class="display-6">Here is the list of all variables in CrisisDB so far:</h1>
+<hr>
+        {{agrpod}}
+    </div>
+    <!-- <div class="row">
+        {% for k, v in list_of_vars.items %}
+        <div class="col-md-2 no border-bottom border-success text-center">
+            <div class="card panel-transparent mt-4">
+                <a href="{% url 'crisisdb-index' %}">
+                    <center style="color: #356859"><i class="fa fa-{{v.1}} fa-3x"></i></center>
+                </a>
+                <div class="card-body mt-2">
+                    <div class="mt-3">
+                        <h6 class="card-title text-center lead"> <strong>{{k}}</strong></h6>
+                        <h2 class="card-title text-center display"><span class="text-success"><strong>{{v.0}}</strong></span> </h2>
+                    </div>
+                  <div class="mt-3">
+                    <a class="btn btn-sm btn-outline-primary" href="{% url 'crisisdb-index' %}" class="card-link"> <i class="fa fa-eye"></i> &nbsp; View</a>
+                    <a class="btn btn-sm btn-outline-success" href="#" class="card-link"> &nbsp; Add &nbsp; <i class="fa fa-plus"></i></a>
+                  </div>
+                </div>
+            </div>
+        </div>     
+        {% endfor %}
+    </div> -->
+</div>
+
+
+{% endblock %}

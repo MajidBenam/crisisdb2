@@ -44,12 +44,15 @@
         {% block extra_vars %}
         {% endblock extra_vars %}
         <div class="row">
-            <div class="col-md-6 mb-2">
+            <div class="col-md-2 mb-2 ps-4">
+              {{ form.tag|as_crispy_field }}
+            </div>
+            <div class="col-md-5 mb-2">
               {{ form.citations|as_crispy_field }}
             </div>
-            <div class="col-md-6 mb-2">
+            <div class="col-md-5 mb-2">
                 {{ form.description|as_crispy_field }}
-              </div>
+            </div>
         </div>
         <div class="row">
             {% if request.user.is_staff %}

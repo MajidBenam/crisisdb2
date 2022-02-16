@@ -2,12 +2,22 @@
 {% load crispy_forms_tags %}{% load static %}
 {% load humanize %}
 
+{% block download_button %}
+    <a href="{% url 'Agr_Prod_Pop-create' %}" class="btn btn-outline-success mx-3 my-4 float-end"><i class="fa fa-plus"></i> &nbsp; Add More Facts</a>
+    <a href="{% url 'agr_prod_pop-download' %}" class="btn btn-outline-primary ms-auto my-4 float-end"><i class="fa fa-download"></i> &nbsp; Download All</a>
+{% endblock download_button %}
+
 {% block myheadings_list %}
-<th scope="col">Total Population</th>
-<th scope="col">Arable Land</th>
+    <th style="text-align: center;" scope="col">Total Population</th>
+    <th style="text-align: center;" scope="col">Arable Land</th>
 {% endblock myheadings_list %}
 
 {% block extra_vars_list %}
-<td style="text-align: center;">{{ agr.total_population|intcomma }}</td>
-<td style="text-align: center;">{{ agr.arable_land_per_capita }}</td>
+    <td style="text-align: center;">{{ obj.total_population|intcomma }}</td>
+    <td style="text-align: center;">{{ obj.arable_land_per_capita }}</td>
 {% endblock extra_vars_list %}
+
+<!-- Update Button -->
+{% block update_button %}
+    <td style="text-align: center;"><a href="{% url 'Agr_Prod_Pop-update' obj.id %}"><button class="btn btn-outline-primary btn-sm">Update</button></a></td>
+{% endblock update_button %}

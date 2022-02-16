@@ -201,44 +201,58 @@ class Rulertransition(models.Model):
     def __str__(self):
         return "%s: from %s to %s" % (self.polity, self.predecessor, self.successor)
 
+# abstract class for use in other things:
 
-class Agr_Prod_Pop(models.Model):
-    """Model Representing an Agricultural Production Population Variable"""
-    polity = models.ForeignKey(Polity, on_delete=models.SET_NULL, null=True)
+
+class SeshatCommon(models.Model):
+    polity = models.ForeignKey(Polity, on_delete=models.SET_NULL, related_name="%(app_label)s_%(class)s_related",
+                               related_query_name="%(app_label)s_%(class)ss", null=True)
     section = models.ForeignKey(
-        Section, on_delete=models.SET_NULL, null=True, default=1)
+        Section, on_delete=models.SET_NULL, related_name="%(app_label)s_%(class)s_related",
+        related_query_name="%(app_label)s_%(class)ss", blank=True, null=True,)
     subsection = models.ForeignKey(
-        Subsection, on_delete=models.SET_NULL, null=True, default=1)
+        Subsection, on_delete=models.SET_NULL, related_name="%(app_label)s_%(class)s_related",
+        related_query_name="%(app_label)s_%(class)ss", blank=True, null=True,)
     name = models.CharField(
-        max_length=100, default="Agricultural production and population")
+        max_length=200,)
     year_from = models.IntegerField(blank=True, null=True)
     year_to = models.IntegerField(blank=True, null=True)
-    total_population = models.IntegerField(blank=True, null=True)
-    arable_land_per_capita = models.DecimalField(
-        blank=True, null=True, decimal_places=2, max_digits=7, help_text="Arable Land per capita (mu)")
+    # exra vars will be added in between
     description = models.TextField(
         blank=True, null=True, help_text="Add an Optional description or a personal comment above.")
     citations = ManyToManyField(
-        Citation, help_text=mark_safe('Select one or more references for this fact. Hold CTRL to select multiple.'), blank=True,)
+        Citation, related_name="%(app_label)s_%(class)s_related",
+                               related_query_name="%(app_label)s_%(class)ss", help_text=mark_safe('Select one or more references for this fact. Hold CTRL to select multiple.'), blank=True,)
     finalized = models.BooleanField(default=False)
     created_date = models.DateTimeField(
         auto_now_add=True, blank=True, null=True)
     modified_date = models.DateTimeField(auto_now=True, blank=True, null=True)
     tag = models.CharField(max_length=5, choices=Tags, default="TRS")
 
-    # citation_1 = models.ForeignKey(
-    #     Citation, on_delete=models.SET_NULL, null=True, blank=True, help_text='Select a reference for this fact',
-    #     related_name="citation1")
-    # citation_2 = models.ForeignKey(
-    #     Citation, on_delete=models.SET_NULL, null=True, blank=True, help_text='Select a reference for this fact',
-    #     related_name="citation2")
+    class Meta:
+        abstract = True
+        ordering = ['polity']
+
+
+class Majid(SeshatCommon):
+    my_total_population = models.IntegerField(blank=True, null=True)
+
+    def __str__(self) -> str:
+        """string for epresenting the model obj in Admin Site"""
+        return self.name
+
+
+class Agr_Prod_Pop(SeshatCommon):
+    """Model Representing an Agricultural Production and Population Variable"""
+    name = models.CharField(
+        max_length=100, default="Agricultural Production and Population")
+    total_population = models.IntegerField(blank=True, null=True)
+    arable_land_per_capita = models.DecimalField(
+        blank=True, null=True, decimal_places=2, max_digits=7, help_text="Arable Land per capita (mu)")
+
     class Meta:
         verbose_name = 'Agricultural production and population'
         verbose_name_plural = 'Agricultural production and populations'
-
-    # @property
-    # def display_citations(self):
-    #     return '<br>'.join(['<a href="#"> ref: ' + citation.ref.title[:25]+' ... </a>' for citation in self.citations.all()[:2]])
 
     @property
     def display_citations(self):
@@ -251,6 +265,14 @@ class Agr_Prod_Pop(models.Model):
         if self.year_from > self.year_to:
             raise ValidationError({
                 'year_from': 'The start year is bigger than the end year!',
+            })
+        if self.year_from < -10000 or self.year_from > date.today().year:
+            raise ValidationError({
+                'year_from': 'The start year is out of range!',
+            })
+        if self.year_to < -10000 or self.year_to > date.today().year:
+            raise ValidationError({
+                'year_to': 'The end year is out of range!',
             })
 
     def get_absolute_url(self):

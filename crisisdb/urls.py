@@ -1,12 +1,19 @@
 from django.urls import path
+from .models import Agr_Prod_Pop, Polity, Rulertransition
+from django.views.generic.list import ListView
 
 from . import views
 
 urlpatterns = [
     path('', views.crisisdbindex, name='crisisdb-index'),
-    path('vars/', views.crisisdbvars, name='crisisdb-vars'),
-]
+    #path('vars/', views.crisisdbvars, name='crisisdb-vars'),
+    path('vars/', views.CrisisDBVarsView.as_view(), name='crisisdb-vars'),
 
+]
+# get_context_data: {"agr_list": Agr_Prod_Pop.objects.all(),
+# "rul_list": Rulertransition.objects.all(),
+# and so on for all the desired models...
+#  }
 urlpatterns += [
     path('Agr_Prod_Pops/', views.Agr_Prod_PopListView.as_view(), name='Agr_Prod_Pops'),
     path('Agr_Prod_Pop/<int:pk>', views.Agr_Prod_PopDetailView.as_view(),
@@ -17,6 +24,10 @@ urlpatterns += [
          views.Agr_Prod_PopUpdate.as_view(), name="Agr_Prod_Pop-update"),
     path('Agr_Prod_Pop/<int:pk>/delete/',
          views.Agr_Prod_PopDelete.as_view(), name="Agr_Prod_Pop-delete"),
+    # Download
+    path('agrprodpopdownload/', views.agr_prod_pop_download,
+         name="agr_prod_pop-download"),
+
 ]
 
 urlpatterns += [

@@ -6,73 +6,78 @@
 
 {% block content %}
 <div class="container">
-    {% if agr_prod_pop_list %}
+    {% if object_list %}
     <div class="row">
             <div class="col-md-8 mt-4">
-                <h5 class="lead-2">List of all the data for: {{agr_prod_pop_list.0.section}}</h5>
-                <h6><span class="display-6">Agricultural Production and Population </span></h6>
-                <h6><span class="text-secondary">Section</span>: <mark>{{agr_prod_pop_list.0.section}}</mark> &nbsp; / &nbsp; <span class="text-secondary">Subsection</span>: <mark>{{agr_prod_pop_list.0.subsection}} </mark></h6>
-
+                <h5 class="lead-2">List of all the data for: {{object_list.0.section}}</h5>
+                <h6><span class="display-6">{{object_list.0.name}}</span></h6>
             </div>
         <div class="col-md-4">      
-          <a href="{% url 'Agr_Prod_Pop-create' %}" class="btn btn-outline-success mx-3 my-4 float-end"> Add another fact</a>
-          <a href="{% url 'crisisdb-index' %}" class="btn btn-outline-primary ms-auto my-4 float-end"> Go back to home page</a>
+            <!-- Download and Create Buttons -->
+          {% block download_button %}
+          {% endblock download_button %}
+
         </div>
       </div>
+      <div class="row">
+        <div class="col-md-12 mt-4">
+            <h6><span class="text-secondary">Section</span>: <mark>{{object_list.0.section}}</mark> &nbsp; / &nbsp; <span class="text-secondary">Subsection</span>: <mark>{{object_list.0.subsection}} </mark></h6>
+        </div>
+    </div>
       <hr>
     <div class="table-responsive">
         <table class="table align-middle table-striped">
             <thead>
               <tr>
-                <th scope="col" class="text-secondary">#Row</th>
+                <th scope="col" class="text-secondary">#</th>
                 <th scope="col">Polity</th>
                 <th scope="col">Year (From)</th>
                 <th scope="col">Year (To)</th>
                 <!-- headings for extra vars -->
                 {% block myheadings_list %}
                 {% endblock myheadings_list %}
-
                 <th scope="col">References</th>
-                <th scope="col" style="text-align: center">Tag</th>
+                <th scope="col" style="text-align: center">Certainty</th>
                 <th scope="col" style="text-align: center">Verified</th>
                 <th scope="col" style="text-align: center">Update?</th>
               </tr>
             </thead>
             <tbody>
-                {% for agr in object_list %}
+                {% for obj in object_list %}
                     <tr>
                     <div>
-                    <td class="text-secondary" style="text-align: center;" scope="row">{{ forloop.counter0|add:page_obj.start_index }}</td>
-                    <td style="text-align: center;">{{ agr.polity.name }}</td>
-                    <td style="text-align: center;">{{ agr.year_from }}</td>
-                    <td style="text-align: center;">{{ agr.year_to }}</td>
+                    <td class="text-secondary" scope="row">{{ forloop.counter0|add:page_obj.start_index }}</td>
+                    <td style="text-align: center;">{{ obj.polity.name }}</td>
+                    <td style="text-align: center;">{{ obj.year_from }}</td>
+                    <td style="text-align: center;">{{ obj.year_to }}</td>
                     <!-- extra vars come here -->
                     {% block extra_vars_list %}
                     {% endblock extra_vars_list %}
-                    <td> {% autoescape off %}{{ agr.display_citations }}{% endautoescape %}</td>
+                    <td> {% autoescape off %}{{ obj.display_citations }}{% endautoescape %}</td>
 
                     <!-- Tag tag (Disputed/Suspected etc.) -->
-                    {% if agr.tag == "DSP" %}
-                        <td style="text-align: center;"><span class="badge rounded-pill bg-danger">{{ agr.get_tag_display }}</span></td>
-                    {% elif  agr.tag == "SSP" %}
-                        <td style="text-align: center;"> <span class="badge rounded-pill bg-warning text-dark">{{ agr.get_tag_display }}</span></td>
-                    {% elif  agr.tag == "UNK" %}
-                        <td style="text-align: center;"><span class="badge rounded-pill bg-secondary">{{ agr.get_tag_display }}</span></td>
-                    {% elif  agr.tag == "IFR" %}
-                        <td style="text-align: center;"><span class="badge rounded-pill bg-primary">{{ agr.get_tag_display }}</span></td>
+                    {% if obj.tag == "DSP" %}
+                        <td style="text-align: center;"><span class="badge rounded-pill bg-danger">{{ obj.get_tag_display }}</span></td>
+                    {% elif  obj.tag == "SSP" %}
+                        <td style="text-align: center;"> <span class="badge rounded-pill bg-warning text-dark">{{ obj.get_tag_display }}</span></td>
+                    {% elif  obj.tag == "UNK" %}
+                        <td style="text-align: center;"><span class="badge rounded-pill bg-secondary">{{ obj.get_tag_display }}</span></td>
+                    {% elif  obj.tag == "IFR" %}
+                        <td style="text-align: center;"><span class="badge rounded-pill bg-primary">{{ obj.get_tag_display }}</span></td>
                     {% else  %}
-                        <td style="text-align: center;"><span class="badge rounded-pill bg-success">{{ agr.get_tag_display }}</span></td>
+                        <td style="text-align: center;"><span class="badge rounded-pill bg-success">{{ obj.get_tag_display }}</span></td>
                     {% endif %}
 
                     <!-- Verified Tag -->
-                    {% if agr.finalized %}
+                    {% if obj.finalized %}
                         <td style="text-align: center; color:green;"><i class="fas fa-check"></i></td>
                     {% else %}
                         <td style="text-align: center; color:red;"><i class="fas fa-times-circle"></i></td>
                     {% endif %}
 
-
-                    <td style="text-align: center;"><a href="{% url 'Agr_Prod_Pop-update' agr.id %}"><button class="btn btn-warning btn-sm">Update </button></a></td>
+                    <!-- Update Button -->
+                    {% block update_button %}
+                    {% endblock update_button %}
 
                 </div>
                 </tr>

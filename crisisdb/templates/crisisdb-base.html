@@ -20,7 +20,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Be+Vietnam+Pro:wght@400;600;900&family=Lobster&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Mochiy+Pop+P+One&family=Neonderthaw&display=swap" rel="stylesheet">
-
+    <link rel="icon" type="image/png" href="http://seshatdatabank.info/databrowser/img/seshat-icon.png">
     <link rel="shortcut icon" href="#">
 
     <!-- autocomplete -->
@@ -38,10 +38,8 @@
     {% block content %}
     {% endblock %}
     <!-- main content -->
-    <div class="container">
-        {% block content-home %}
-        {% endblock %}
-    </div>
+    {% block content-home %}
+    {% endblock %}
 
     <!-- footer -->
     <div class="container-fluid">

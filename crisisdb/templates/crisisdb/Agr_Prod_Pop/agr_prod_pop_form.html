@@ -5,14 +5,11 @@
 
 {% block extra_vars %}
 <div class="row">
-    <div class="col-md-4 mb-2">
+    <div class="col-md-6 mb-2">
         {{ form.total_population|as_crispy_field }}
     </div>
-    <div class="col-md-4 mb-2">
+    <div class="col-md-6 mb-2">
         {{ form.arable_land_per_capita|as_crispy_field }}
-    </div>
-    <div class="col-md-4 mb-2">
-        {{ form.tag|as_crispy_field }}
     </div>
 </div>
 {% endblock extra_vars %}

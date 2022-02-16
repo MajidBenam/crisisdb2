@@ -23,10 +23,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 #SECRET_KEY = 'django-insecure-su9z&m=$ymt%pu7z^=@-14mj*j3!ma1^z+!^d)lhyuw7c1z!60'
-SECRET_KEY = os.environ.get('SECRET_KEY')
+#SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+if DEBUG:
+    SECRET_KEY = 'django-insecure-su9z&m=$ymt%pu7z^=@-14mj*j3!ma1^z+!^d)lhyuw7c1z!60'
+else:
+    SECRET_KEY = os.environ['SECRET_KEY']
+
 
 ALLOWED_HOSTS = ['crisisdb2.herokuapp.com', ]
 

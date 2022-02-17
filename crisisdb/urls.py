@@ -3,11 +3,14 @@ from .models import Agr_Prod_Pop, Polity, Rulertransition
 from django.views.generic.list import ListView
 
 from . import views
+from.views import PolityAutocomplete, CitationAutocomplete
 
 urlpatterns = [
     path('', views.crisisdbindex, name='crisisdb-index'),
-    #path('vars/', views.crisisdbvars, name='crisisdb-vars'),
+    # path('vars/', views.crisisdbvars, name='crisisdb-vars'),
     path('vars/', views.CrisisDBVarsView.as_view(), name='crisisdb-vars'),
+    path('ajax/load-subsections/', views.load_subsections,
+         name='ajax_load_subsections'),
 
 ]
 # get_context_data: {"agr_list": Agr_Prod_Pop.objects.all(),
@@ -46,4 +49,18 @@ urlpatterns += [
          views.RulertransitionUpdate.as_view(), name="rulertransition-update"),
     path('rulertransition/<int:pk>/delete/',
          views.RulertransitionDelete.as_view(), name="rulertransition-delete"),
+]
+
+
+urlpatterns += [
+    path(
+        'polity-autocomplete/',
+        PolityAutocomplete.as_view(),
+        name='polity-autocomplete',
+    ),
+    path(
+        'citation-autocomplete/',
+        CitationAutocomplete.as_view(),
+        name='citation-autocomplete',
+    ),
 ]

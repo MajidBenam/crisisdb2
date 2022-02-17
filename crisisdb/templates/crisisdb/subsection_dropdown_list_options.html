@@ -1,0 +1,4 @@
+<option value="">--------</option>
+{% for subsection in subsections %}
+<option value="{{ subsection.pk }}">{{ subsection.name }}</option>
+{% endfor %}

@@ -1,10 +1,11 @@
 import datetime
+from dal import autocomplete
 
 from django import forms
 from django.db.models.base import Model
 from django.forms import ModelForm
 from django.forms.widgets import Textarea
-from crisisdb.models import Agr_Prod_Pop, Citation, Rulertransition
+from crisisdb.models import Agr_Prod_Pop, Citation, Rulertransition, Subsection, Section
 #from crispy_forms.helper import FormHelper
 
 from django.core.exceptions import ValidationError
@@ -77,6 +78,7 @@ class Agr_Prod_PopForm(forms.ModelForm):
         # maybe we can use similar technique as below to feed the form with more data here
         # in the form of a dictionary and then iterate in the template
         self.full_name = 'Agricultural_production_and_population'
+        #self.fields['subsection'].queryset = Subsection.objects.none()
     # to read the above in template (very easy)
     # {% for key, value in form.mydic.items %}
     #   <h4>{{ key }}: {{ value }}</h4>
@@ -118,14 +120,18 @@ class Agr_Prod_PopForm(forms.ModelForm):
         # make sure the id that is selected here for subsection and section matches reality ALL the TIME
         widgets = {
             'polity': forms.Select(attrs={'class': 'form-control  mb-3', }),
-            'section': forms.Select(attrs={'class': 'form-control  mb-3', 'readonly': True, 'selected': True, }),
-            'subsection': forms.Select(attrs={'class': 'form-control  mb-3', 'readonly': True, 'selected': True, }),
+            # 'polity': autocomplete.ModelSelect2(url='polity-autocomplete'),
+            'section': forms.Select(attrs={'class': 'form-control  mb-3', },),
+            'subsection': forms.Select(attrs={'class': 'form-control  mb-3', }),
+
             'year_from': forms.NumberInput(attrs={'class': 'form-control  mb-3', }),
             'year_to': forms.NumberInput(attrs={'class': 'form-control  mb-3', }),
             'total_population': forms.NumberInput(attrs={'class': 'form-control  mb-3', }),
             'arable_land_per_capita': forms.NumberInput(attrs={'step': 0.01}),
             'description': Textarea(attrs={'class': 'form-control  mb-3', 'style': 'height: 140px'}),
+            # 'citations': autocomplete.ModelSelect2Multiple(url='citation-autocomplete'),
             'citations': forms.SelectMultiple(attrs={'class': 'form-control  mb-3',  'style': 'height: 140px'}),
+
             'tag': forms.RadioSelect(attrs={'class': 'form-control  mb-3', }),
             'finalized': forms.CheckboxInput(attrs={'class': ' mb-3', 'checked': True, }),
             # 'citation_2': forms.Select(attrs={'class': 'form-control  mb-3', }),

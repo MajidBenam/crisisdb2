@@ -26,20 +26,25 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 #SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = (os.environ.get('DEBUG_VALUE') == 'True')
+DEBUG = (os.environ.get('DEBUG_VALUE') == "True")
+#DEBUG = True
+
 
 if DEBUG:
     SECRET_KEY = 'django-insecure-su9z&m=$ymt%pu7z^=@-14mj*j3!ma1^z+!^d)lhyuw7c1z!60'
 else:
-    SECRET_KEY = os.environ['SECRET_KEY']
+    SECRET_KEY = os.environ.get('SECRET_KEY')
 
 
-ALLOWED_HOSTS = ['crisisdb2.herokuapp.com', ]
+ALLOWED_HOSTS = ['crisisdb2.herokuapp.com', '127.0.0.1', ]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'dal',
+    'dal_select2',
+    # 'dal_queryset_sequence',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -53,6 +58,7 @@ INSTALLED_APPS = [
     # 'simple_autocomplete',
     'django_select2',
     'django.contrib.humanize',
+    'storages',
     # 'django-model-utils',
 
 ]
@@ -157,3 +163,12 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 django_heroku.settings(locals())
+
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'

@@ -61,8 +61,9 @@ class Polity(models.Model):
 
 
 class Country(models.Model):
-    name = models.CharField(max_length=100)
-    polity = models.ForeignKey(Polity, on_delete=models.SET_NULL, null=True)
+    name = models.CharField(max_length=200)
+    polity = models.ForeignKey(
+        Polity, on_delete=models.SET_NULL, null=True, related_name="countries")
 
     class Meta:
         verbose_name = 'country'
@@ -74,7 +75,7 @@ class Country(models.Model):
 
 
 class Section(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=200)
 
     def __str__(self) -> str:
         """string for epresenting the model obj in Admin Site"""
@@ -82,9 +83,9 @@ class Section(models.Model):
 
 
 class Subsection(models.Model):
-    name = models.CharField(max_length=100)
-    sect = models.ForeignKey(
-        'Section', on_delete=models.SET_NULL, null=True, related_name="subsection")
+    name = models.CharField(max_length=200)
+    section = models.ForeignKey(
+        Section, on_delete=models.SET_NULL, null=True, related_name="subsections")
 
     def __str__(self) -> str:
         """string for epresenting the model obj in Admin Site"""
@@ -112,7 +113,7 @@ class Citation(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4,
                           help_text="Unique Id for this particular citation")
     ref = models.ForeignKey(
-        'Reference', on_delete=models.SET_NULL, null=True, related_name="citation")
+        Reference, on_delete=models.SET_NULL, null=True, related_name="citation")
     page_from = models.IntegerField(null=True, blank=True)
     page_to = models.IntegerField(null=True, blank=True)
 
@@ -269,6 +270,14 @@ class Agr_Prod_Pop(SeshatCommon):
         if self.year_from < -10000 or self.year_from > date.today().year:
             raise ValidationError({
                 'year_from': 'The start year is out of range!',
+            })
+        if self.year_from < self.polity.start:
+            raise ValidationError({
+                'year_from': 'The start year is earlier than the start year of the corresponding polity!',
+            })
+        if self.year_to > self.polity.end:
+            raise ValidationError({
+                'year_to': 'The end year is later than the end year of the corresponding polity!',
             })
         if self.year_to < -10000 or self.year_to > date.today().year:
             raise ValidationError({

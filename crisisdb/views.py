@@ -1,3 +1,4 @@
+from dal import autocomplete
 from django.db.models.base import Model
 # from django.http.response import HttpResponse
 from django.shortcuts import render, get_object_or_404, HttpResponse
@@ -9,7 +10,7 @@ from django.views.generic.list import ListView
 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
-from django.http import HttpResponseRedirect, response
+from django.http import HttpResponseRedirect, response, JsonResponse
 from .models import Rulertransition, Agr_Prod_Pop, Citation, Reference, Agr_Productivity, Agr_Prod_Per_Pop, Polity, Section, Subsection
 
 from django.urls import reverse, reverse_lazy
@@ -191,7 +192,7 @@ class Agr_Prod_PopCreate(PermissionRequiredMixin, CreateView):
 class Agr_Prod_PopUpdate(PermissionRequiredMixin, UpdateView):
     model = Agr_Prod_Pop
     # Not recommended (potential security issue if more fields added)
-    fields = '__all__'
+    form_class = Agr_Prod_PopForm
     template_name = "crisisdb/Agr_Prod_Pop/agr_prod_pop_form.html"
     permission_required = 'catalog.can_mark_returned'
 
@@ -265,3 +266,40 @@ class CrisisDBVarsView(ListView):
         context["agrpod"] = Agr_Prod_Pop.objects.all()
         print(context['mylist'])
         return context
+
+
+def load_subsections(request):
+    my_section_id = request.GET.get('section')
+    subsections = Subsection.objects.filter(
+        section_id=my_section_id).order_by('name')
+    # for s in subsections:
+    #    print(s.pk, s.name)
+    return render(request, 'crisisdb/subsection_dropdown_list_options.html', {'subsections': subsections})
+
+
+class PolityAutocomplete(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        # Don't forget to filter out results depending on the visitor !
+        if not self.request.user.is_authenticated:
+            return Polity.objects.none()
+
+        qs = Polity.objects.all()
+        print(qs)
+        # if self.q:
+        #    qs = qs.filter(name__istartswith=self.q)
+
+        return qs
+
+
+class CitationAutocomplete(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        # Don't forget to filter out results depending on the visitor !
+        if not self.request.user.is_authenticated:
+            return Citation.objects.none()
+
+        qs = Citation.objects.all()
+        print(qs)
+        # if self.q:
+        #    qs = qs.filter(name__istartswith=self.q)
+
+        return qs

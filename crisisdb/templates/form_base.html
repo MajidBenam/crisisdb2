@@ -5,7 +5,7 @@
 {% block content %}
 <!-- form-row and form-group etc are removed in Bootstrap 5 -->
 <div class="container mt-5">
-    <form action="" method="post">
+    <form action="" id="createForm" data-subsections-url="{% url 'ajax_load_subsections' %}" method="post">
         {% csrf_token %}
         <legend>
             <div class="row">
@@ -87,6 +87,30 @@
         {% endfor %}
         {% endif %} -->
           </form>
+
+
+
+          <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+              <script>
+                $("#id_section").change(function () {
+                  var url = $("#createForm").attr("data-subsections-url");  // get the url of the `load_cities` view
+                  var sectionId = $(this).val();  // get the selected section ID from the HTML input
+                  //console.log(sectionId)
+                  $.ajax({                       // initialize an AJAX request
+                    url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+                    data: {
+                      'section': sectionId       // add the country id to the GET parameters
+                    },
+                    success: function (data) {   // `data` is the return of the `load_cities` view function
+                      $("#id_subsection").html(data);  // replace the contents of the city input with the data that came from the server
+                    }
+                  });
+
+                });
+              </script>
+
+
+
         <div class="col-md-12">
             <hr>
             <h6>* Your entered data will soon be checked by a Seshat Expert.</h6>

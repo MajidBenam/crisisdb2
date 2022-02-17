@@ -9,8 +9,9 @@
     {% if object_list %}
     <div class="row">
             <div class="col-md-8 mt-4">
-                <h5 class="lead-2">List of all the data for: {{object_list.0.section}}</h5>
-                <h6><span class="display-6">{{object_list.0.name}}</span></h6>
+                <h5 class="lead-2">List of all the data for:</h5>
+                <hr>
+                <h6><span class="text-secondary">Section</span>: <mark>{{object_list.0.section}}</mark> &nbsp; / &nbsp; <span class="text-secondary">Subsection</span>: <mark>{{object_list.0.subsection}} </mark></h6>
             </div>
         <div class="col-md-4">      
             <!-- Download and Create Buttons -->
@@ -21,7 +22,8 @@
       </div>
       <div class="row">
         <div class="col-md-12 mt-4">
-            <h6><span class="text-secondary">Section</span>: <mark>{{object_list.0.section}}</mark> &nbsp; / &nbsp; <span class="text-secondary">Subsection</span>: <mark>{{object_list.0.subsection}} </mark></h6>
+            <!-- <h5 class="lead-2">List of all the data for: {{object_list.0.section}}</h5> -->
+            <h6><span class="display-6">{{object_list.0.name}}</span></h6>
         </div>
     </div>
       <hr>

@@ -58,7 +58,7 @@ INSTALLED_APPS = [
     # 'simple_autocomplete',
     'django_select2',
     'django.contrib.humanize',
-    'storages',
+    # 'storages',
     # 'django-model-utils',
 
 ]

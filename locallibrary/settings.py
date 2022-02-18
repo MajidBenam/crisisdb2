@@ -197,4 +197,5 @@ AWS_LOCATION = 'staticfiles'
 #STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 # potentially switchable to django_on_heroku
-django_heroku.settings(locals(),  staticfiles=False)
+#django_heroku.settings(locals(),  staticfiles=False)
+django_heroku.settings(locals())
